@@ -137,4 +137,42 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
 
 ## Executor's Feedback or Assistance Requests
 
-## Lessons 
+## Lessons
+### Task 1: Educator Phase
+
+**Concept Summary:**
+- SwiftUI App Entry Point: Every SwiftUI app starts with an `@main` struct conforming to `App`. This is where your app's lifecycle begins.
+- Clean Architecture: Separates your code into layers (UI, business logic, data) for better maintainability and testability.
+- Folder Structure: Common folders are `Views`, `Models`, `ViewModels`, and `Services`.
+
+**Example: Minimal SwiftUI App**
+```swift
+import SwiftUI
+
+@main
+struct HocusFocusApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        Text("Hello, Hocus Focus!")
+    }
+}
+```
+
+**Pre-task Micro-Exercise:**
+- Create a new SwiftUI view (e.g., `ContentView.swift`) and display `"Hello, Hocus Focus!"` on the screen.
+
+**Guiding Question:**
+- Why is separation of concerns important in app design?
+
+**Quick Quiz:**
+1. What does the `@main` attribute do in a SwiftUI app?
+2. What are the benefits of organizing your code into `Views`, `Models`, and `ViewModels`?
+
+--- 
