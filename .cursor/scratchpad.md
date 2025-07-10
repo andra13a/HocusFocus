@@ -175,4 +175,66 @@ struct ContentView: View {
 1. What does the `@main` attribute do in a SwiftUI app?
 2. What are the benefits of organizing your code into `Views`, `Models`, and `ViewModels`?
 
---- 
+### Task 3: Educator Phase
+
+**Concept Summary:**
+- SwiftUI provides gesture recognizers like `LongPressGesture` and `DragGesture` to detect and respond to user touch events.
+- You can use `@State` to track whether the user is pressing and control the timer's state.
+- The timer should only run while the user is pressing and stop/reset when released.
+
+**Example: Hold-to-Focus Button**
+```swift
+struct HoldToFocusButton: View {
+    @State private var isHolding = false
+    var body: some View {
+        Circle()
+            .fill(isHolding ? Color.green : Color.gray)
+            .frame(width: 100, height: 100)
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in isHolding = true }
+                    .onEnded { _ in isHolding = false }
+            )
+    }
+}
+```
+
+**Pre-task Micro-Exercise:**
+- Make a button or circle that prints "Holding!" to the console while pressed, and "Released!" when the finger is lifted.
+
+**Guiding Question:**
+- What's the difference between a tap and a long press in SwiftUI?
+
+**Quick Quiz:**
+1. How does `DragGesture` differ from `LongPressGesture`?
+2. Why is `@State` important for updating the UI in response to gestures?
+3. How would you reset the timer if the user lifts their finger before the session is complete?
+
+### Task 4: Educator Phase
+
+**Concept Summary:**
+- ARKit enables advanced camera-based features, including face and eye tracking, on supported iOS devices (those with a TrueDepth camera).
+- You can use `ARFaceTrackingConfiguration` to access face and gaze data, but you must check device support first.
+- Eye-tracking data can be used to determine if the user is looking at the screen, enabling a "stare-to-focus" mode.
+
+**Example: Check for ARKit Face Tracking Support**
+```swift
+import ARKit
+
+if ARFaceTrackingConfiguration.isSupported {
+    print("Face tracking is supported!")
+} else {
+    print("Face tracking is NOT supported on this device.")
+}
+```
+
+**Pre-task Micro-Exercise:**
+- Write a function that checks if ARKit face tracking is supported and prints a message to the console.
+
+**Guiding Question:**
+- What privacy considerations exist for eye-tracking features? (Think about user consent, data storage, and transparency.)
+
+**Quick Quiz:**
+1. What devices support ARKit face and eye tracking?
+2. How can you detect if the user is looking at the screen using ARKit?
+3. Why is it important to check for device support before enabling ARKit features?
