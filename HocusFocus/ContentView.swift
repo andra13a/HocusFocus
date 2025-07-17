@@ -28,10 +28,46 @@ struct FocusDetailView: View {
     }
 }
 
+struct SessionHistoryView: View {
+    @ObservedObject var sessionManager: SessionManager
+
+    func formatTime(_ interval: TimeInterval) -> String {
+        let minutes = Int(interval) / 60
+        let seconds = Int(interval) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            // Analytics Section
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Total Focus Time: \(formatTime(sessionManager.totalFocusTime))")
+                    .font(.headline)
+                Text("Average Session: \(formatTime(sessionManager.averageSessionDuration))")
+                    .font(.subheadline)
+            }
+            .padding(.horizontal)
+
+            // Session List
+            List(sessionManager.sessions) { session in
+                VStack(alignment: .leading) {
+                    Text(session.label ?? "No Label")
+                    Text("Mode: \(session.mode ?? "Unknown"), Duration: \(Int(session.duration))s")
+                        .font(.caption)
+                    Text("\(session.timestamp.formatted())")
+                        .font(.caption2)
+                }
+            }
+        }
+        .navigationTitle("Session History")
+    }
+}
+
 struct ContentView: View {
     @State private var selectedMode: FocusMode? = nil
     @StateObject private var sessionManager: SessionManager
     @State private var showDetail = false
+    @State private var showSessionHistory = false
     @StateObject private var formatter = TimerLabelFormatter()
     @Environment(\.modelContext) private var modelContext
 
@@ -74,17 +110,12 @@ struct ContentView: View {
                         sessionManager.fetchSessionsFromSupabase()
                     }
                     .padding(.bottom, 4)
-                    List(sessionManager.sessions) { session in
-                        VStack(alignment: .leading) {
-                            Text(session.label ?? "No Label")
-                            Text("Mode: \(session.mode ?? "Unknown"), Duration: \(Int(session.duration))s")
-                                .font(.caption)
-                            Text("\(session.timestamp.formatted())")
-                                .font(.caption2)
-                        }
+                    Button("Session History") {
+                        showSessionHistory = true
                     }
-                    .frame(height: 200)
-                    Divider().padding()
+                    .navigationDestination(isPresented: $showSessionHistory) {
+                        SessionHistoryView(sessionManager: sessionManager)
+                    }
                     Button("Show Focus Details") {
                         showDetail = true
                     }
