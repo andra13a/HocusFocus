@@ -6,18 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
-class AppSettings: ObservableObject {
-    
+struct RootView: View {
+    @Environment(\.modelContext) private var modelContext
+    var body: some View {
+        ContentView(modelContext: modelContext)
+    }
 }
 
 @main
 struct HocusFocusApp: App {
-    @StateObject private var settings = AppSettings()
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(settings)
+            RootView()
+                .modelContainer(for: [Session.self])
         }
     }
 }
