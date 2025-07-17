@@ -238,3 +238,138 @@ if ARFaceTrackingConfiguration.isSupported {
 1. What devices support ARKit face and eye tracking?
 2. How can you detect if the user is looking at the screen using ARKit?
 3. Why is it important to check for device support before enabling ARKit features?
+
+### Task 5: Educator Phase
+
+**Concept Summary:**
+- Persistence means saving data so it remains available after the app is closed or the device is restarted.
+- SwiftData (or CoreData) is Apple’s framework for local data storage, allowing you to save, fetch, update, and delete objects.
+- A data model defines the structure of the data you want to store (e.g., a Session with mode, label, timestamp, duration).
+- CRUD stands for Create, Read, Update, Delete—the four basic operations for persistent data.
+
+**Example: Simple Session Model and Persistence**
+```swift
+import Foundation
+
+struct Session: Identifiable, Codable {
+    let id: UUID
+    let mode: String
+    let label: String
+    let timestamp: Date
+    let duration: TimeInterval
+}
+
+// Saving a Session (UserDefaults example for simplicity):
+func saveSession(_ session: Session) {
+    var sessions = loadSessions()
+    sessions.append(session)
+    if let data = try? JSONEncoder().encode(sessions) {
+        UserDefaults.standard.set(data, forKey: "sessions")
+    }
+}
+
+func loadSessions() -> [Session] {
+    if let data = UserDefaults.standard.data(forKey: "sessions"),
+       let sessions = try? JSONDecoder().decode([Session].self, from: data) {
+        return sessions
+    }
+    return []
+}
+```
+> For production, use SwiftData or CoreData for more robust storage.
+
+**Pre-task Micro-Exercise:**
+- Define a simple `Session` struct with the required properties.
+- Write a function to save a session to local storage and another to load all sessions.
+
+**Guiding Question:**
+- What are the trade-offs between local and cloud storage?
+  - Local storage is fast, private, and works offline, but data is lost if the device is lost or the app is deleted.
+  - Cloud storage enables sync and backup, but requires internet and has privacy/security considerations.
+
+**Quick Quiz:**
+1. What is a data model, and why is it important for persistence?
+   - A data model defines the structure of the data you want to store. It ensures consistency and makes it easier to save, load, and manage data.
+2. What does CRUD stand for?
+   - Create, Read, Update, Delete.
+3. Why might you choose SwiftData/CoreData over UserDefaults for session storage?
+   - SwiftData/CoreData is designed for complex, structured data and supports relationships, queries, and large datasets, while UserDefaults is best for small, simple data.
+
+### Task 6: Educator Phase
+
+**Concept Summary:**
+- Cloud sync allows your app to store and retrieve data from a remote server, enabling backup, multi-device access, and collaboration.
+- Supabase is an open-source backend-as-a-service that provides a Postgres database, RESTful API, authentication, and more.
+- To sync data, your app will need to make HTTP requests (using `URLSession` or a Supabase Swift SDK) to send and fetch session data.
+- You must handle authentication, network errors, and potential conflicts between local and remote data.
+
+**Example: Making a Simple API Call to Supabase**
+```swift
+import Foundation
+
+let url = URL(string: "https://your-project.supabase.co/rest/v1/sessions")!
+var request = URLRequest(url: url)
+request.httpMethod = "GET"
+request.addValue("Bearer YOUR_SUPABASE_API_KEY", forHTTPHeaderField: "Authorization")
+
+let task = URLSession.shared.dataTask(with: request) { data, response, error in
+    if let data = data {
+        print(String(data: data, encoding: .utf8) ?? "No data")
+    } else if let error = error {
+        print("Error: \(error)")
+    }
+}
+task.resume()
+```
+
+**Pre-task Micro-Exercise:**
+- Try writing a function that fetches data from a public API (e.g., https://jsonplaceholder.typicode.com/todos/1) and prints the result to the console.
+
+**Guiding Question:**
+- What are the main challenges when syncing data between a local database and a cloud backend?
+
+**Quick Quiz:**
+1. What is Supabase, and what services does it provide?
+2. Why do you need to handle authentication when syncing with a cloud backend?
+3. What is a RESTful API, and how does your app communicate with it?
+4. How would you resolve a conflict if a session is changed both locally and in the cloud?
+
+### Task 7: Educator Phase
+
+**Concept Summary:**
+- A good session history and analytics UI helps users reflect on their focus habits and progress.
+- In SwiftUI, you can use `List` and `ForEach` to display collections of data, and computed properties to calculate statistics (like total time, streaks, or averages).
+- Separating session history into its own view keeps the main interface clean and focused, improving user experience and scalability.
+- Navigation in SwiftUI is handled with navigation links or destinations, allowing users to move between the main page and detailed history views.
+
+**Example: Displaying Session History in a Dedicated View**
+```swift
+struct SessionHistoryView: View {
+    @ObservedObject var sessionManager: SessionManager
+    var body: some View {
+        List(sessionManager.sessions) { session in
+            VStack(alignment: .leading) {
+                Text(session.label ?? "No Label")
+                Text("Mode: \(session.mode ?? "Unknown"), Duration: \(Int(session.duration))s")
+                    .font(.caption)
+                Text("\(session.timestamp.formatted())")
+                    .font(.caption2)
+            }
+        }
+        .navigationTitle("Session History")
+    }
+}
+```
+
+**Pre-task Micro-Exercise:**
+- Create a mock list of sessions and display them in a SwiftUI `List`.
+- Add a computed property to calculate the total focus time from all sessions.
+
+**Guiding Question:**
+- How can you design your session history UI to be both informative and uncluttered for the user?
+
+**Quick Quiz:**
+1. What SwiftUI view is commonly used to display a scrollable list of items?
+2. Why is it beneficial to move session history to a separate view instead of showing it on the main page?
+3. How can you calculate statistics (like total duration) from your session data in SwiftUI?
+4. What are some ways to make analytics accessible and meaningful to all users?
