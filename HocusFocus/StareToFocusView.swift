@@ -8,8 +8,8 @@ struct StareToFocusView: View {
     @StateObject private var viewModel: StareToFocusViewModel
     @State private var isLooking = false
     
-    init(modelContext: ModelContext) {
-        _viewModel = StateObject(wrappedValue: StareToFocusViewModel(modelContext: modelContext))
+    init(modelContext: ModelContext, sessionManager: SessionManager) {
+        _viewModel = StateObject(wrappedValue: StareToFocusViewModel(modelContext: modelContext, sessionManager: sessionManager))
     }
     
     var body: some View {
@@ -33,6 +33,7 @@ struct StareToFocusView: View {
             }
             .frame(width: 200, height: 200)
             .padding()
+            .accessibilityIdentifier("StareToFocusTimer")
             ARFaceTrackingContainer(isLooking: $isLooking)
                 .frame(height: 300)
         }
@@ -43,10 +44,10 @@ struct StareToFocusView: View {
 }
 
 #Preview {
-    // Provide a dummy modelContext for preview
-    StareToFocusView(modelContext: try! ModelContainer(for: Session.self).mainContext)
+    let modelContainer = try! ModelContainer(for: Session.self)
+    let sessionManager = SessionManager(modelContext: modelContainer.mainContext)
+    return StareToFocusView(modelContext: modelContainer.mainContext, sessionManager: sessionManager)
 }
-
 
 struct ARFaceTrackingContainer: UIViewRepresentable {
     @Binding var isLooking: Bool

@@ -1,17 +1,12 @@
-//
-//  HocusFocusTests.swift
-//  HocusFocusTests
-//
-//  Created by Stefania-Andra Dutu on 04/07/2025.
-//
-
-import Testing
+import XCTest
 @testable import HocusFocus
 
-struct HocusFocusTests {
-
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+class HocusFocusTests: XCTestCase {
+    func testTimerLabelFormatter() {
+        let formatter = TimerLabelFormatter()
+        XCTAssertEqual(formatter.format(seconds: 0), "00:00")
+        XCTAssertEqual(formatter.format(seconds: 60), "01:00")
+        XCTAssertEqual(formatter.format(seconds: 125), "02:05")
+        XCTAssertEqual(formatter.format(seconds: 3600), "60:00")
     }
-
 }

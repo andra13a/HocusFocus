@@ -373,3 +373,39 @@ struct SessionHistoryView: View {
 2. Why is it beneficial to move session history to a separate view instead of showing it on the main page?
 3. How can you calculate statistics (like total duration) from your session data in SwiftUI?
 4. What are some ways to make analytics accessible and meaningful to all users?
+
+### Task 8: Educator Phase
+
+**Concept Summary:**
+- Automated testing ensures your app's logic works as intended and helps prevent regressions when refactoring or adding features.
+- Unit tests check the correctness of individual functions, models, and business logic (e.g., timer calculations, session creation).
+- UI tests simulate user interactions to verify that the app's interface responds correctly (e.g., starting/stopping timers, saving sessions).
+- Test-driven development (TDD) encourages writing tests before code, leading to more robust and maintainable software.
+
+**Example: Writing a Unit Test for a Timer Function**
+```swift
+import XCTest
+@testable import HocusFocus
+
+class TimerTests: XCTestCase {
+    func testTimerCountsDown() {
+        let timer = MyTimer(duration: 10)
+        timer.start()
+        timer.tick() // simulate 1 second
+        XCTAssertEqual(timer.remaining, 9)
+    }
+}
+```
+
+**Pre-task Micro-Exercise:**
+- Write a unit test for a function that calculates the total duration of a list of sessions.
+- Create a UI test that launches the app, starts a focus session, and verifies that a new session appears in the history.
+
+**Guiding Question:**
+- What are the benefits of automated testing for app development and maintenance?
+
+**Quick Quiz:**
+1. What is the difference between a unit test and a UI test?
+2. Why is it important to test both business logic and user interface flows?
+3. How can TDD improve the quality of your code?
+4. What tools does Xcode provide for writing and running tests?

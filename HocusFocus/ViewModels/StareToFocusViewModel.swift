@@ -8,9 +8,10 @@ class StareToFocusViewModel: ObservableObject {
     let duration: CGFloat = 10.0
     private var timer: Timer?
     private var modelContext: ModelContext
-
-    init(modelContext: ModelContext) {
+    private let sessionManager: SessionManager
+    init(modelContext: ModelContext, sessionManager: SessionManager) {
         self.modelContext = modelContext
+        self.sessionManager = sessionManager
     }
 
     func onLookingChanged(_ isLooking: Bool) {
@@ -30,7 +31,9 @@ class StareToFocusViewModel: ObservableObject {
                 self.progress = 1.0
                 self.completed = true
                 self.timer?.invalidate()
-                self.saveSession()
+                Task { @MainActor in
+                    self.saveSession()
+                }
             }
         }
     }
@@ -42,15 +45,9 @@ class StareToFocusViewModel: ObservableObject {
         completed = false
     }
 
-    private func saveSession() {
-        let session = Session(mode: "stare", label: "Stare to Focus", timestamp: Date(), duration: TimeInterval(duration))
-        modelContext.insert(session)
-        do {
-            try modelContext.save()
-            print("Session saved successfully: \(session)")
-            SupabaseService.uploadSession(mode: "stare", label: "Stare to Focus", timestamp: Date(), duration: TimeInterval(duration))
-        } catch {
-            print("Failed to save session: \(error)")
-        }
+    @MainActor private func saveSession() {
+    sessionManager.addSession(mode: "stare", label: "Stare to Focus", duration: TimeInterval(duration))
+        SupabaseService.uploadSession(mode: "stare", label: "Stare to Focus", timestamp: Date(), duration: TimeInterval(duration))
+    
     }
 } 

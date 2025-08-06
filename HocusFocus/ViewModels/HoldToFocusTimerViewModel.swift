@@ -9,9 +9,11 @@ class HoldToFocusTimerViewModel: ObservableObject {
     let duration: CGFloat = 10.0 // seconds for full circle
 
     private var modelContext: ModelContext
+    private let sessionManager: SessionManager
 
-    init(modelContext: ModelContext) {
+    init(modelContext: ModelContext, sessionManager: SessionManager) {
         self.modelContext = modelContext
+        self.sessionManager = sessionManager
     }
 
     func startHolding() {
@@ -34,7 +36,9 @@ class HoldToFocusTimerViewModel: ObservableObject {
                 self.progress += 0.02 / self.duration
                 if self.progress >= 1.0 {
                     self.progress = 1.0
-                    self.saveSession()
+                    Task { @MainActor in
+                        self.saveSession()
+                    }
                     self.stopAndResetTimer()
                 }
             }
@@ -47,15 +51,8 @@ class HoldToFocusTimerViewModel: ObservableObject {
         progress = 0.0
     }
 
-    private func saveSession() {
-        let session = Session(mode: "hold", label: "Hold to Focus", timestamp: Date(), duration: TimeInterval(duration))
-        modelContext.insert(session)
-        do {
-            try modelContext.save()
-            print("Session saved successfully: \(session)")
-            SupabaseService.uploadSession(mode: "hold", label: "Hold to Focus", timestamp: Date(), duration: TimeInterval(duration))
-        } catch {
-            print("Failed to save session: \(error)")
-        }
+    @MainActor private func saveSession() {
+        sessionManager.addSession(mode: "hold", label: "Hold to Focus", duration: TimeInterval(duration))
+        SupabaseService.uploadSession(mode: "hold", label: "Hold to Focus", timestamp: Date(), duration: TimeInterval(duration))
     }
 } 

@@ -4,8 +4,8 @@ import SwiftData
 struct HoldToFocusTimerView: View {
     @StateObject private var viewModel: HoldToFocusTimerViewModel
     
-    init(modelContext: ModelContext) {
-        _viewModel = StateObject(wrappedValue: HoldToFocusTimerViewModel(modelContext: modelContext))
+    init(modelContext: ModelContext, sessionManager: SessionManager) {
+        _viewModel = StateObject(wrappedValue: HoldToFocusTimerViewModel(modelContext: modelContext, sessionManager: sessionManager))
     }
     
     var body: some View {
@@ -19,6 +19,7 @@ struct HoldToFocusTimerView: View {
                 .animation(.linear, value: viewModel.progress)
         }
         .frame(width: 200, height: 200)
+        .accessibilityIdentifier("HoldToFocusTimer")
         .gesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { _ in
@@ -32,5 +33,7 @@ struct HoldToFocusTimerView: View {
 }
 
 #Preview {
-    HoldToFocusTimerView(modelContext: try! ModelContainer(for: Session.self).mainContext)
+    let modelContainer = try! ModelContainer(for: Session.self)
+    let sessionManager = SessionManager(modelContext: modelContainer.mainContext)
+    return HoldToFocusTimerView(modelContext: modelContainer.mainContext, sessionManager: sessionManager)
 } 
