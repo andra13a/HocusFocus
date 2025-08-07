@@ -182,7 +182,7 @@ struct ContentView: View {
 - You can use `@State` to track whether the user is pressing and control the timer's state.
 - The timer should only run while the user is pressing and stop/reset when released.
 
-**Example: Hold-to-Focus Button**
+**Example: Hold-to-Focus Button**`
 ```swift
 struct HoldToFocusButton: View {
     @State private var isHolding = false
@@ -409,3 +409,4 @@ class TimerTests: XCTestCase {
 2. Why is it important to test both business logic and user interface flows?
 3. How can TDD improve the quality of your code?
 4. What tools does Xcode provide for writing and running tests?
+
