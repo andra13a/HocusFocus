@@ -1,9 +1,3 @@
-//
-//  HocusFocusApp.swift
-//  HocusFocus
-//
-//  Created by Stefania-Andra Dutu on 28/06/2025.
-//
 
 import SwiftUI
 import SwiftData

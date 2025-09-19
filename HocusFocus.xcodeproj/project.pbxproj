@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D371158E2E4A77CD00449785 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = D371158D2E4A77CD00449785 /* SwiftSoup */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		D3CAD0532E18038D00044821 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D371158E2E4A77CD00449785 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			);
 			name = HocusFocus;
 			packageProductDependencies = (
+				D371158D2E4A77CD00449785 /* SwiftSoup */,
 			);
 			productName = HocusFocus;
 			productReference = D3CAD0452E18038C00044821 /* HocusFocus.app */;
@@ -208,6 +214,9 @@
 			);
 			mainGroup = D3CAD03C2E18038B00044821;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D371158C2E4A776800449785 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D3CAD0462E18038C00044821 /* Products */;
 			projectDirPath = "";
@@ -575,6 +584,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D371158C2E4A776800449785 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D371158D2E4A77CD00449785 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D371158C2E4A776800449785 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D3CAD03D2E18038B00044821 /* Project object */;
 }

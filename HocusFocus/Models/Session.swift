@@ -8,6 +8,17 @@ class Session: Identifiable {
     var label: String?
     var timestamp: Date
     var duration: TimeInterval
+    var notificationsReceived: Int = 0
+        var distractions: Int = 0
+        var timeZoneIdentifier: String = TimeZone.current.identifier
+
+        var isPerfect: Bool {
+            return distractions == 0 && notificationsReceived == 0
+        }
+
+        var isDistractionFree: Bool {
+            return distractions == 0
+        }
     
     init(id: UUID = UUID(), mode: String? = nil, label: String? = nil, timestamp: Date, duration: TimeInterval) {
         self.id = id
@@ -15,6 +26,7 @@ class Session: Identifiable {
         self.label = label
         self.timestamp = timestamp
         self.duration = duration
+
     }
 }
 

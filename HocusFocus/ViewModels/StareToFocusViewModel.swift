@@ -5,8 +5,10 @@ import SwiftData
 class StareToFocusViewModel: ObservableObject {
     @Published var progress: CGFloat = 0.0
     @Published var completed = false
+    @Published var timerText: String = "0s"
     let duration: CGFloat = 10.0
     private var timer: Timer?
+    private var secondsElapsed: Int = 0
     private var modelContext: ModelContext
     private let sessionManager: SessionManager
     init(modelContext: ModelContext, sessionManager: SessionManager) {
@@ -22,11 +24,13 @@ class StareToFocusViewModel: ObservableObject {
         }
     }
 
-    private func startTimer() {
+    func startTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
-            self.progress += 0.02 / self.duration
+            self.secondsElapsed += 1
+            self.timerText = self.formatTime(self.secondsElapsed)
+            self.progress = min(CGFloat(self.secondsElapsed) / self.duration, 1.0)
             if self.progress >= 1.0 {
                 self.progress = 1.0
                 self.completed = true
@@ -38,16 +42,27 @@ class StareToFocusViewModel: ObservableObject {
         }
     }
 
-    private func stopAndResetTimer() {
+    func stopAndResetTimer() {
         timer?.invalidate()
         timer = nil
         progress = 0.0
         completed = false
+        secondsElapsed = 0
+        timerText = "0s"
     }
 
     @MainActor private func saveSession() {
-    sessionManager.addSession(mode: "stare", label: "Stare to Focus", duration: TimeInterval(duration))
-        SupabaseService.uploadSession(mode: "stare", label: "Stare to Focus", timestamp: Date(), duration: TimeInterval(duration))
-    
+        sessionManager.addSession(mode: "stare", label: "Stare to Focus", duration: TimeInterval(secondsElapsed))
+        SupabaseService.uploadSession(mode: "stare", label: "Stare to Focus", timestamp: Date(), duration: TimeInterval(secondsElapsed))
+    }
+
+    private func formatTime(_ seconds: Int) -> String {
+        let minutes = seconds / 60
+        let secs = seconds % 60
+        if minutes > 0 {
+            return "\(minutes)m:\(String(format: "%02d", secs))s"
+        } else {
+            return "\(secs)s"
+        }
     }
 } 

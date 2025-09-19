@@ -11,7 +11,7 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
 - Supporting background execution and robust error handling
 
 ## High-Level Task Breakdown
-- [ ] Task 1: Set up a new SwiftUI project with clean architecture scaffolding
+- [x] Task 1: Set up a new SwiftUI project with clean architecture scaffolding
   - ✅ Success Criteria: Project builds and runs a basic SwiftUI view; folder structure supports separation of concerns.
   - 🎯 Learning Goal: Understand project setup, SwiftUI app lifecycle, and clean architecture basics.
   - 📘 Educator Notes: 
@@ -21,7 +21,7 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
     - **Exercise:** Create a new SwiftUI view and display "Hello, Hocus Focus!".
     - **Question:** Why is separation of concerns important in app design?
 
-- [ ] Task 2: Implement the circular timer UI component
+- [x] Task 2: Implement the circular timer UI component
   - ✅ Success Criteria: A circular timer is visible and animates as time passes.
   - 🎯 Learning Goal: Learn about SwiftUI drawing, animation, and state management.
   - 📘 Educator Notes:
@@ -30,34 +30,18 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
     - **Exercise:** Animate a circle filling up over 10 seconds.
     - **Question:** How does SwiftUI's state system trigger UI updates?
 
-- [ ] Task 3: Add Hold-to-Focus mode (touch gesture starts/stops timer)
+- [x] Task 3: Add Hold-to-Focus mode (touch gesture starts/stops timer)
   - ✅ Success Criteria: Timer only runs while finger is pressed; session ends if lifted.
   - 🎯 Learning Goal: Practice gesture handling and timer control in SwiftUI.
   - 📘 Educator Notes:
     - Use `LongPressGesture` or `DragGesture` for continuous touch.
     - Use `Timer.publish` or `DispatchSourceTimer` for timing.
-    - **Example:**
-      ```swift
-      struct HoldToFocusButton: View {
-          @State private var isHolding = false
-          var body: some View {
-              Circle()
-                  .fill(isHolding ? Color.green : Color.gray)
-                  .frame(width: 100, height: 100)
-                  .gesture(
-                      DragGesture(minimumDistance: 0)
-                          .onChanged { _ in isHolding = true }
-                          .onEnded { _ in isHolding = false }
-                  )
-          }
-      }
-      ```
     - **Micro-Exercise:**
       Try making a button or circle that prints "Holding!" to the console while pressed, and "Released!" when the finger is lifted.
     - **Guiding Question:**
       What's the difference between a tap and a long press in SwiftUI?
 
-- [ ] Task 4: Add Stare-to-Focus mode (ARKit eye-tracking)
+- [x] Task 4: Add Stare-to-Focus mode (ARKit eye-tracking)
   - ✅ Success Criteria: Timer runs only when user's gaze is detected on screen; session ends if gaze leaves.
   - 🎯 Learning Goal: Integrate ARKit, understand device capability checks, and basic eye-tracking.
   - 📘 Educator Notes:
@@ -65,23 +49,13 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
       - ARKit can track where a user is looking using the TrueDepth camera (available on devices with Face ID).
       - Not all devices support ARKit eye-tracking. You must check for support before enabling this feature.
       - Use `ARSession` and `ARFaceTrackingConfiguration` to start a session and receive face/gaze data.
-    - **Example:**
-      ```swift
-      import ARKit
-      // Check if device supports face tracking
-      if ARFaceTrackingConfiguration.isSupported {
-          print("Face tracking is supported!")
-      } else {
-          print("Face tracking is NOT supported on this device.")
-      }
-      ```
       - You can use `ARSessionDelegate` to receive updates about the user's face and gaze.
     - **Micro-Exercise:**
       Try writing a function that checks if ARKit face tracking is supported and prints a message to the console.
     - **Guiding Question:**
       What privacy considerations exist for eye-tracking features? (Think about user consent, data storage, and transparency.)
 
-- [ ] Task 5: Persist session data locally with SwiftData
+- [x] Task 5: Persist session data locally with SwiftData
   - ✅ Success Criteria: Each session (mode, label, timestamp, duration) is saved and can be loaded.
   - 🎯 Learning Goal: Learn about data models, persistence, and SwiftData basics.
   - 📘 Educator Notes:
@@ -90,7 +64,7 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
     - **Exercise:** Save and load a simple object to local storage.
     - **Question:** What are the trade-offs between local and cloud storage?
 
-- [ ] Task 6: Sync session data with Supabase
+- [x] Task 6: Sync session data with Supabase
   - ✅ Success Criteria: Session data is uploaded and synced with a Supabase backend.
   - 🎯 Learning Goal: Understand cloud sync, REST APIs, and authentication basics.
   - 📘 Educator Notes:
@@ -99,7 +73,7 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
     - **Exercise:** Make a test API call to Supabase.
     - **Question:** How do you handle sync conflicts between local and remote data?
 
-- [ ] Task 7: Add session history and analytics UI
+- [x] Task 7: Add session history and analytics UI
   - ✅ Success Criteria: User can view, filter, and sort past sessions; stats update correctly.
   - 🎯 Learning Goal: Practice list views, filtering, and computed properties in SwiftUI.
   - 📘 Educator Notes:
@@ -108,7 +82,7 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
     - **Exercise:** Display a list of mock sessions and calculate a total.
     - **Question:** How can you make analytics accessible to all users?
 
-- [ ] Task 8: Write unit and UI tests for timer, gesture, and data logic
+- [x] Task 8: Write unit and UI tests for timer, gesture, and data logic
   - ✅ Success Criteria: All core logic is covered by passing tests.
   - 🎯 Learning Goal: Practice TDD and testable SwiftUI design.
   - 📘 Educator Notes:
@@ -116,7 +90,7 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
     - **Exercise:** Write a test for a timer function.
     - **Question:** Why is automated testing important for refactoring?
 
-- [ ] Task 9: Add haptic feedback and accessibility improvements
+- [] Task 9: Add haptic feedback and accessibility improvements
   - ✅ Success Criteria: Haptics trigger on milestones; UI is accessible for all users.
   - 🎯 Learning Goal: Learn CoreHaptics and SwiftUI accessibility modifiers.
   - 📘 Educator Notes:
@@ -125,15 +99,15 @@ Hocus Focus is a minimalist, distraction-resistant iOS focus timer designed for 
     - **Question:** What are best practices for accessible SwiftUI apps?
 
 ## Project Status Board
-- [ ] Task 1: Set up a new SwiftUI project with clean architecture scaffolding
-- [ ] Task 2: Implement the circular timer UI component
-- [ ] Task 3: Add Hold-to-Focus mode (touch gesture starts/stops timer)
-- [ ] Task 4: Add Stare-to-Focus mode (ARKit eye-tracking)
-- [ ] Task 5: Persist session data locally with SwiftData
-- [ ] Task 6: Sync session data with Supabase
-- [ ] Task 7: Add session history and analytics UI
-- [ ] Task 8: Write unit and UI tests for timer, gesture, and data logic
-- [ ] Task 9: Add haptic feedback and accessibility improvements
+- [x] Task 1: Set up a new SwiftUI project with clean architecture scaffolding
+- [x] Task 2: Implement the circular timer UI component
+- [x] Task 3: Add Hold-to-Focus mode (touch gesture starts/stops timer)
+- [x] Task 4: Add Stare-to-Focus mode (ARKit eye-tracking)
+- [x] Task 5: Persist session data locally with SwiftData
+- [x] Task 6: Sync session data with Supabase
+- [x] Task 7: Add session history and analytics UI
+- [x] Task 8: Write unit and UI tests for timer, gesture, and data logic
+- [] Task 9: Add haptic feedback and accessibility improvements
 
 ## Executor's Feedback or Assistance Requests
 
@@ -182,7 +156,7 @@ struct ContentView: View {
 - You can use `@State` to track whether the user is pressing and control the timer's state.
 - The timer should only run while the user is pressing and stop/reset when released.
 
-**Example: Hold-to-Focus Button**`
+**Example: Hold-to-Focus Button**
 ```swift
 struct HoldToFocusButton: View {
     @State private var isHolding = false
@@ -410,3 +384,56 @@ class TimerTests: XCTestCase {
 3. How can TDD improve the quality of your code?
 4. What tools does Xcode provide for writing and running tests?
 
+###Task 9: Educator Phase 
+
+**Concept Summary:**
+
+-Haptic Feedback enhances user experience by providing tactile responses to user actions, making interactions feel more intuitive and satisfying.
+-On iOS, haptics can be implemented using `CoreHaptics` or the simpler `UIFeedbackGenerator` classes like `UIImpactFeedbackGenerator`, `UINotificationFeedbackGenerator`, and `UISelectionFeedbackGenerator`.
+-Accessibility ensures your app is usable by all users, including those with disabilities. SwiftUI provides powerful modifiers like `.accessibilityLabel()`, .`accessibilityValue()`, `.accessibilityHint()`, and more.
+-`VoiceOver` is a screen reader that reads out UI elements. Proper accessibility modifiers make sure VoiceOver users get clear, meaningful descriptions.-Accessibility also involves color contrast, font sizes, dynamic type, and support for assistive technologies.
+
+**Example: Adding Haptic Feedback to a Button Press**
+```swift
+import SwiftUI
+
+struct HapticButton: View {
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
+    var body: some View {
+        Button("Press me") {
+            feedbackGenerator.impactOccurred()
+            print("Button pressed with haptic feedback")
+        }
+        .padding()
+        .background(Color.blue)
+        .foregroundColor(.white)
+        .cornerRadius(8)
+        .accessibilityLabel("Press me button")
+        .accessibilityHint("Triggers a haptic feedback when pressed")
+    }
+}
+```
+**Example: Accessibility Modifiers in SwiftUI**
+```swift 
+Text("Focus Timer")
+    .font(.headline)
+    .accessibilityLabel("Focus Timer Title")
+    .accessibilityAddTraits(.isHeader)
+```
+
+**Pre-task Micro-Exercise:**
+-Add a haptic feedback effect to a tap or long press gesture on any button or circle in your app.
+-Use .accessibilityLabel and .accessibilityHint to describe your interactive elements.
+-Test your app with VoiceOver enabled to hear how your accessibility labels sound.
+
+**Guiding Questions:**
+-What are the benefits of using haptic feedback in user interfaces?
+-How do accessibility modifiers improve the experience for users with disabilities?
+-What considerations should you make to ensure your app supports VoiceOver effectively?
+
+**Quick Quiz:**
+-What classes can you use to implement haptic feedback in iOS?
+-How does .accessibilityLabel help VoiceOver users?
+-Why is it important to provide accessibility hints and traits?
+-What are some common accessibility features to check for in a SwiftUI app?
